@@ -16,7 +16,6 @@ function Widget() {
                 <h2>What's happening</h2>
                 <TwitterTweetEmbed tweetId={'933354946111705097'} />
                 <TwitterTimelineEmbed
-                    
                     sourceType="profile"
                     screenName="saurabhnemade"
                     options={{ heigh: 400 }}

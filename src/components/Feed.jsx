@@ -3,45 +3,37 @@ import './Feed.css'
 import Post from './Post'
 import TweetBox from './TweetBox'
 import db from './firebase'
-
+import FlipMove from 'react-flip-move'
 
 function Feed() {
-    const [posts,setPosts]=useState([]);
+    const [posts, setPosts] = useState([]);
 
-useEffect(()=>{
-    // db.collection('posts').onSnapshot(snapshot => (
-    //     setPosts(snapshot.docs.map(doc=>doc.data()))
-    // ))
-    db.collection('posts').onSnapshot(snapshot=>(
-        setPosts(snapshot.docs.map(doc=>doc.data()))
-    ))
-
-})
-
-
+    useEffect(() => {
+        db.collection('posts').onSnapshot(snapshot => (
+            setPosts(snapshot.docs.map(doc => (doc.data())))
+        ))
+    })
     return (
         <div className="feed">
 
             <div className="feed__header">
                 <h2 >Home</h2>
-
             </div>
             <TweetBox />
-            <Post
-                displayName="faizan"
-                username="faizzy"
-                verified={true}
-                text="finally its working"
-                avatar="https://scontent.flhe3-1.fna.fbcdn.net/v/t1.0-9/94785242_253701049103929_5235586033134862336_n.jpg?_nc_cat=105&_nc_sid=09cbfe&_nc_eui2=AeGMhqIJyydVFWNTkLrsMil9cbLQbQy1n1VxstBtDLWfVbEVs4O-XHTQ41LhsugD30OZTPQZJ8AOC0xCTpWfeeEF&_nc_ohc=-aYzBVB_IyoAX8j-W8g&_nc_ht=scontent.flhe3-1.fna&oh=caf00ed3fa078137137de3d0c98c0230&oe=5FB339E2"
-                image="https://media3.giphy.com/media/65ATdpi3clAdjomZ39/giphy.gif" />
-    
-
-          
-
-
-
-
-
+            <FlipMove>
+            {posts.map(post => (
+                    <Post
+                        key={post.text}
+                        displayName={post.displayName}
+                        username={post.username}
+                        verified={post.verified}
+                        text={post.text}
+                        avatar={post.avatar}
+                        image={post.image}
+                    />
+                ))
+            }
+            </FlipMove>
         </div>
     )
 }
